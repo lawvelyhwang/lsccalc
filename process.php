@@ -31,72 +31,6 @@
   @import url('http://fonts.googleapis.com/earlyaccess/nanumgothic.css');
   html, body, h1, h2, h3, h4, h5, h6, li, p {font-family:'Nanum Gothic';}
 </style>
-<script type="text/javascript">
-  google.charts.load('current', {'packages':['corechart']});
-  google.charts.setOnLoadCallback(drawChart);
-
-  function drawChart () {
-
-        var data = new google.visualization.DataTable();
-
-
-        data.addColumn('number', 'Leet');
-        data.addColumn('number', 'Gpa');
-        data.addColumn({type: 'string', role: 'tooltip'});
-        data.addColumn( {'type': 'string', 'role': 'style'} );
-        data.addColumn({'type' : 'string', 'role': 'annotation'});
-
-        data.addRows([
-          [110.5,90.22,'강원대 110.5,90.22','point {size :7; fill-color: #9babff','강원대'],
-          [120.28,90.59,'건국대 120.28,90.59','point {size :7; fill-color: #9babff','건국대'],
-          [110.92,92.14,'경북대 110.92,92.14','point {size :7; fill-color: #9babff','경북대'],
-          [113,94.66,'경희대 113,94.66','point {size :7; fill-color: #9babff','경희대'],
-          [125.5,95.5,'고려대 125.5,95.5','point {size :7; fill-color: #9babff','고려대'],
-          [107.7,87.6,'동아대 107.7,87.6','point {size :7; fill-color: #9babff','동아대'],
-          [116.42,93.58,'부산대 116.42,93.58','point {size :7; fill-color: #9babff','부산대'],
-          [117.8,92.85,'서강대 117.8,92.85','point {size :7; fill-color: #9babff','서강대'],
-          [134,96.2,'서울대 134,96.2','point {size :7; fill-color: #9babff','서울대'],
-          [117.36,94.22,'시립대 117.36,94.22','point {size :7; fill-color: #9babff','시립대'],
-          [127.1,92.8,'성대 127.1,92.8','point {size :7; fill-color: #9babff','성대'],
-          [110.7,89,'아주대 110.7,89','point {size :7; fill-color: #9babff','아주대'],
-          [126,97.2,'연세대 126,97.2','point {size :7; fill-color: #9babff','연세대'],
-          [103.55,90.2,'영남대 103.55,90.2','point {size :7; fill-color: #9babff','영남대'],
-          [103.36,91.55,'원광대 103.36,91.55','point {size :7; fill-color: #9babff','원광대'],
-          [116.5,96,'이대 116.5,96','point {size :7; fill-color: #9babff','이대'],
-          [112.9,93.7,'인하대 112.9,93.7','point {size :7; fill-color: #9babff','인하대'],
-          [110.1,92.17,'전남대 110.1,92.17','point {size :7; fill-color: #9babff','전남대'],
-          [105.4,93,'전북대 105.4,93','point {size :7; fill-color: #9babff','전북대'],
-          [105.7,91.25,'제주대 105.7,91.25','point {size :7; fill-color: #9babff','제주대'],
-          [119.7,94.3,'중앙대 119.7,94.3','point {size :7; fill-color: #9babff','중앙대'],
-          [113.52,92.59,'충남대 113.52,92.59','point {size :7; fill-color: #9babff','충남대'],
-          [102.88,93.3,'충북대 102.88,93.3','point {size :7; fill-color: #9babff','충북대'],
-          [119.6,92.5,'외대 119.6,92.5','point {size :7; fill-color: #9babff','외대'],
-          [120.8,96.13,'한양대 120.8,96.13','point {size :7; fill-color: #9babff','한양대'],
-
-          <?php
-            require_once 'lib.php';
-            $leet = $_POST['leetAscore'] + $_POST['leetBscore'];
-            $row = get_table("gpaconverttable",  $_POST['radio'], round($_POST['schoolScore'],2));
-            $gpa = $row['100'];
-            echo "[{$leet},{$gpa},'본인','point {size :8; fill-color: #ff3737','본인']";
-            #echo "[120,88,'본인','point {size :8; fill-color: red']";
-          ?>
-        ]);
-
-        var options = {
-          width: 800,
-          height: 500,
-          title: '2018 합격자 기준 leet - gpa 분산표',
-          hAxis: {title: 'Leet Score'},
-          vAxis: {title: 'Gpa Score'},
-          legend: 'none'
-        };
-
-        //var chart = new google.charts.Scatter(document.getElementById('chart_div'));
-        var chart = new google.visualization.ScatterChart(document.getElementById('chart_div'));
-        chart.draw(data, options);
-      }
-</script>
   <title>로스쿨 모의 지원</title>
 </head>
 <body>
@@ -112,9 +46,10 @@
 
 
   <?php
-  error_reporting(0);
-  //    error_reporting(E_ALL);
-  //    ini_set("display_errors",1);
+  require_once 'lib.php';
+  //error_reporting(0);
+      error_reporting(E_ALL);
+      ini_set("display_errors",1);
   $start_time = array_sum(explode(' ', microtime()));
 
 
