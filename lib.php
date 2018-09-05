@@ -602,7 +602,7 @@ class aju extends schoolInfo{
   function get_convertedLeet(){
     //$this->convertedScore[0] = (($this->scoreArray[0] + $this->scoreArray[2])*0.4 +
     //($this->scoreArray[1]+$this->scoreArray[3])*0.1)*0.25+5; //2018
-    $this->convertedScore[0] = (($this->scoreArray[0]*0.4 + $this->scoreArray[2]*0.6)*0.8 + ($this->scoreArray[1]*0.4 + $this->scoreArray[3]*0.6)*0.2)*0.25+5
+    $this->convertedScore[0] = (($this->scoreArray[0]*0.4 + $this->scoreArray[2]*0.6)*0.8 + ($this->scoreArray[1]*0.4 + $this->scoreArray[3]*0.6)*0.2)*0.25+5;
     //2019
 
   }
@@ -780,7 +780,7 @@ class ehu extends schoolInfo{
     //$row = get_table_de("ehuleetconverttable", 'leet', $this->scoreArray[0]+$this->scoreArray[2]);
 
     //$this->convertedScore[0] = $row['score']; //2018
-    $this->convertedScore[0] = ($this->scoreArray[0]+$this->scoreArray[2]-40)/2 //2019
+    $this->convertedScore[0] = ($this->scoreArray[0]+$this->scoreArray[2]-40)/2; //2019
   }
 
   function get_convertedGpa(){

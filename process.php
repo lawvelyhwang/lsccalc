@@ -31,6 +31,72 @@
   @import url('http://fonts.googleapis.com/earlyaccess/nanumgothic.css');
   html, body, h1, h2, h3, h4, h5, h6, li, p {font-family:'Nanum Gothic';}
 </style>
+<script type="text/javascript">
+  google.charts.load('current', {'packages':['corechart']});
+  google.charts.setOnLoadCallback(drawChart);
+
+  function drawChart () {
+
+        var data = new google.visualization.DataTable();
+
+
+        data.addColumn('number', 'Leet');
+        data.addColumn('number', 'Gpa');
+        data.addColumn({type: 'string', role: 'tooltip'});
+        data.addColumn( {'type': 'string', 'role': 'style'} );
+        data.addColumn({'type' : 'string', 'role': 'annotation'});
+
+        data.addRows([
+          [110.5,90.22,'강원대 110.5,90.22','point {size :7; fill-color: #9babff','강원대'],
+          [120.28,90.59,'건국대 120.28,90.59','point {size :7; fill-color: #9babff','건국대'],
+          [110.92,92.14,'경북대 110.92,92.14','point {size :7; fill-color: #9babff','경북대'],
+          [113,94.66,'경희대 113,94.66','point {size :7; fill-color: #9babff','경희대'],
+          [125.5,95.5,'고려대 125.5,95.5','point {size :7; fill-color: #9babff','고려대'],
+          [107.7,87.6,'동아대 107.7,87.6','point {size :7; fill-color: #9babff','동아대'],
+          [116.42,93.58,'부산대 116.42,93.58','point {size :7; fill-color: #9babff','부산대'],
+          [117.8,92.85,'서강대 117.8,92.85','point {size :7; fill-color: #9babff','서강대'],
+          [134,96.2,'서울대 134,96.2','point {size :7; fill-color: #9babff','서울대'],
+          [117.36,94.22,'시립대 117.36,94.22','point {size :7; fill-color: #9babff','시립대'],
+          [127.1,92.8,'성대 127.1,92.8','point {size :7; fill-color: #9babff','성대'],
+          [110.7,89,'아주대 110.7,89','point {size :7; fill-color: #9babff','아주대'],
+          [126,97.2,'연세대 126,97.2','point {size :7; fill-color: #9babff','연세대'],
+          [103.55,90.2,'영남대 103.55,90.2','point {size :7; fill-color: #9babff','영남대'],
+          [103.36,91.55,'원광대 103.36,91.55','point {size :7; fill-color: #9babff','원광대'],
+          [116.5,96,'이대 116.5,96','point {size :7; fill-color: #9babff','이대'],
+          [112.9,93.7,'인하대 112.9,93.7','point {size :7; fill-color: #9babff','인하대'],
+          [110.1,92.17,'전남대 110.1,92.17','point {size :7; fill-color: #9babff','전남대'],
+          [105.4,93,'전북대 105.4,93','point {size :7; fill-color: #9babff','전북대'],
+          [105.7,91.25,'제주대 105.7,91.25','point {size :7; fill-color: #9babff','제주대'],
+          [119.7,94.3,'중앙대 119.7,94.3','point {size :7; fill-color: #9babff','중앙대'],
+          [113.52,92.59,'충남대 113.52,92.59','point {size :7; fill-color: #9babff','충남대'],
+          [102.88,93.3,'충북대 102.88,93.3','point {size :7; fill-color: #9babff','충북대'],
+          [119.6,92.5,'외대 119.6,92.5','point {size :7; fill-color: #9babff','외대'],
+          [120.8,96.13,'한양대 120.8,96.13','point {size :7; fill-color: #9babff','한양대'],
+
+          <?php
+            require_once 'lib.php';
+            $leet = $_POST['leetAscore'] + $_POST['leetBscore'];
+            $row = get_table("gpaconverttable",  $_POST['radio'], round($_POST['schoolScore'],2));
+            $gpa = $row['100'];
+            echo "[{$leet},{$gpa},'본인','point {size :8; fill-color: #ff3737','본인']";
+            #echo "[120,88,'본인','point {size :8; fill-color: red']";
+          ?>
+        ]);
+
+        var options = {
+          width: 800,
+          height: 500,
+          title: '2018 합격자 기준 leet - gpa 분산표',
+          hAxis: {title: 'Leet Score'},
+          vAxis: {title: 'Gpa Score'},
+          legend: 'none'
+        };
+
+        //var chart = new google.charts.Scatter(document.getElementById('chart_div'));
+        var chart = new google.visualization.ScatterChart(document.getElementById('chart_div'));
+        chart.draw(data, options);
+      }
+</script>
   <title>로스쿨 모의 지원</title>
 </head>
 <body>
@@ -46,10 +112,9 @@
 
 
   <?php
-  require_once 'lib.php';
-  //error_reporting(0);
-      error_reporting(E_ALL);
-      ini_set("display_errors",1);
+  error_reporting(0);
+  //    error_reporting(E_ALL);
+  //    ini_set("display_errors",1);
   $start_time = array_sum(explode(' ', microtime()));
 
 
@@ -135,10 +200,10 @@
     <div class="jumbotron" style="background : white;">
       <div tyle="text-align: center;" style="font-weight: bold;" >
 
-         <!--* 아래의 계산된 환산점수는 2018학년도 합격자와의 비교를 위해 2018학년도 입시요강을 사용하고 있습니다. <br>-->
+         * 아래의 계산된 환산점수는 2018학년도 합격자와의 비교를 위해 2018학년도 입시요강을 사용하고 있습니다. <br>
          * 정성요소와 함께 합격자가 선정되기에 이 통계자료가 합격의 절대적인 기준이 될 수 없음을 알려드립니다. <br>
-         <!--* 평균변환점수는 각 학교에서 발표한 2018학년 신입생 선발결과 자료 중 평균값을 기준으로 계산한 값입니다.<br><br>-->
-         <!--* 단계별 학교선택 가이드 1단계 자료와 2019학년도 입시요강 및 정성요소를 고려하시어 최적의 학교를 찾아내시기 바랍니다.<br><br>-->
+         * 평균변환점수는 각 학교에서 발표한 2018학년 신입생 선발결과 자료 중 평균값을 기준으로 계산한 값입니다.<br><br>
+         * 단계별 학교선택 가이드 1단계 자료와 2019학년도 입시요강 및 정성요소를 고려하시어 최적의 학교를 찾아내시기 바랍니다.<br><br>
 
       </div>
       <div class="panel panel-default">
@@ -176,7 +241,7 @@
                 <th width=\"16%\">합계</th>
               </tr>
 
-            </thead><tbody><tr>
+            </thead><tbody><tr >
             <td rowspan=\"4\"  width=\"18%\"><br>{$school[$i-1]->schoolName} </td>
 
               <td width=\"18%\">변환점수</td>
@@ -195,71 +260,72 @@
                 }else{
                   echo $rowRate['eng'];
                 }
-                echo "</td>";
-                 echo "<td width=\"16%\">{$sumValueRate}</td></tr>";
-              // echo "<tr>
-              //   <td width=\"18%\">평균변환점수</td>
-              //   <td width=\"16%\">{$rowAvg['leet']}</td>
-              //   <td width=\"16%\">{$rowAvg['gpa']}</td>
-              //   <td width=\"16%\">";
-              //     if($i == 5){
-              //       echo 99.7;
-              //     }elseif($rowAvg['eng']== 0){
-              //       echo "pass";
-              //     }else{
-              //       echo $rowAvg['eng'];
-              //     }
-              //     echo "</td>
-              //     <td width=\"16%\">{$sumAvg}</td>
-              //   </tr>
-              //
-              //   <tr>";
-              //     $percentleet = round($convertedLeet/$rowAvg['leet'],4)*100;
-              //     $percentgpa = round($convertedGpa/$rowAvg['gpa'],4)*100;
-              //     $percenteng = round($convertedEng/$rowAvg['eng'],4)*100;
-              //     $percentsum = round($sumValue/$sumAvg,4)*100;
-              //
-              //     echo "<td width=\"18%\">본인 / 평균</td> <td width=\"16%\"";
-              //     if($percentleet <= 95){
-              //       echo " style= \"color:#ff0000; font-weight:bold;\"";
-              //     }elseif($percentleet >= 105){
-              //
-              //       echo " style= \"color:#0000ff;\"";
-              //     }
-              //     echo  ">{$percentleet}%</td>
-              //     <td width=\"16%\"";
-              //
-              //     if($percentgpa <= 95){
-              //       echo " style= \"color:#ff0000; font-weight:bold;\"";
-              //     }elseif($percentgpa >= 105){
-              //       echo " style= \"color:#0000ff;\"";
-              //     }
-              //     echo ">{$percentgpa}%</td>
-              //     <td width=\"16%\"";
-              //
-              //     if($percenteng <= 95){
-              //       if($percenteng != 0){
-              //         echo " style= \"color:#ff0000; font-weight:bold;\"";
-              //         echo ">{$percenteng}%";}else{
-              //           echo ">-";
-              //         }
-              //
-              //       }elseif($percenteng >= 105){
-              //         echo " style= \"color:#0000ff;\"";
-              //         echo ">{$percenteng}%";
-              //       }else{
-              //         echo ">{$percenteng}%";
-              //       }
-              //       echo "</td><td width=\"16%\"";
-              //
-              //       if($percentsum <= 95){
-              //         echo " style= \"color:#ff0000; font-weight:bold;\"";
-              //       }elseif($percentsum >= 105){
-              //         echo " style= \"color:#0000ff;\"";
-              //       }
-              //       echo ">{$percentsum}%</td>
-              //     </tr>
-              echo "
+                echo "</td>
+                <td width=\"16%\">{$sumValueRate}</td>
+              </tr>
+              <tr>
+                <td width=\"18%\">평균변환점수</td>
+                <td width=\"16%\">{$rowAvg['leet']}</td>
+                <td width=\"16%\">{$rowAvg['gpa']}</td>
+                <td width=\"16%\">";
+                  if($i == 5){
+                    echo 99.7;
+                  }elseif($rowAvg['eng']== 0){
+                    echo "pass";
+                  }else{
+                    echo $rowAvg['eng'];
+                  }
+                  echo "</td>
+                  <td width=\"16%\">{$sumAvg}</td>
+                </tr>
+
+                <tr>";
+                  $percentleet = round($convertedLeet/$rowAvg['leet'],4)*100;
+                  $percentgpa = round($convertedGpa/$rowAvg['gpa'],4)*100;
+                  $percenteng = round($convertedEng/$rowAvg['eng'],4)*100;
+                  $percentsum = round($sumValue/$sumAvg,4)*100;
+
+                  echo "<td width=\"18%\">본인 / 평균</td> <td width=\"16%\"";
+                  if($percentleet <= 95){
+                    echo " style= \"color:#ff0000; font-weight:bold;\"";
+                  }elseif($percentleet >= 105){
+
+                    echo " style= \"color:#0000ff;\"";
+                  }
+                  echo  ">{$percentleet}%</td>
+                  <td width=\"16%\"";
+
+                  if($percentgpa <= 95){
+                    echo " style= \"color:#ff0000; font-weight:bold;\"";
+                  }elseif($percentgpa >= 105){
+                    echo " style= \"color:#0000ff;\"";
+                  }
+                  echo ">{$percentgpa}%</td>
+                  <td width=\"16%\"";
+
+                  if($percenteng <= 95){
+                    if($percenteng != 0){
+                      echo " style= \"color:#ff0000; font-weight:bold;\"";
+                      echo ">{$percenteng}%";}else{
+                        echo ">-";
+                      }
+
+                    }elseif($percenteng >= 105){
+                      echo " style= \"color:#0000ff;\"";
+                      echo ">{$percenteng}%";
+                    }else{
+                      echo ">{$percenteng}%";
+                    }
+                    echo "</td><td width=\"16%\"";
+
+                    if($percentsum <= 95){
+                      echo " style= \"color:#ff0000; font-weight:bold;\"";
+                    }elseif($percentsum >= 105){
+                      echo " style= \"color:#0000ff;\"";
+                    }
+                    echo ">{$percentsum}%</td>
+                  </tr>
+
                 </tbody>
               </table>";
             }
