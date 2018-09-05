@@ -77,7 +77,7 @@ class schoolInfo{
    public $convertedScore;
    public $applicationRate;
    public $maxLeetA = 80;
-   public $maxLeetB = 80;
+   public $maxLeetB = 75;
    public $scoreArray;
 
 
@@ -131,13 +131,15 @@ class kwu extends schoolInfo{
   }
   function get_convertedLeet(){
     //$this->convertedScore[0] = ($this->scoreArray[0]+$this->scoreArray[2])*2/3; //2017
-    $this->convertedScore[0] = ($this->scoreArray[0] + $this->scoreArray[2])/160*150; //2018
+    //$this->convertedScore[0] = ($this->scoreArray[0] + $this->scoreArray[2])/160*150; //2018
+    $this->convertedScore[0] = ($this->scoreArray[0] + $this->scoreArray[2])/155*150; //2019
   }
 
   function get_convertedGpa(){
     $row = get_table("gpaconverttable", $this->scoreArray[4], $this->scoreArray[5]);
     //$this->convertedScore[1] = $row['100']/2; //2017
-    $this->convertedScore[1] = $row['100']; //2018
+    //$this->convertedScore[1] = $row['100']; //2018
+    $this->convertedScore[1] = $row['100']; //2019
   }
   function get_convertedEng(){ //2017 2018
     $minEngScore;
@@ -169,14 +171,14 @@ class kku extends schoolInfo{
     $this->scoreArray = $scoreArray;
   }
   function get_convertedLeet(){
-    $this->convertedScore[0] = ($this->scoreArray[0]/$this->maxLeetA*150)+($this->scoreArray[2]*150/$this->maxLeetB);
-
+    $this->convertedScore[0] = ($this->scoreArray[0])+($this->scoreArray[2])*150/155;
+    # 지원자중 최상위 점수 지만 155 로 함 # 2019
   }
 
   function get_convertedGpa(){
     $row = get_table("gpaconverttable", $this->scoreArray[4], $this->scoreArray[5]);
     #$this->convertedScore[1] = $row['100']*150/100; // 2017
-    if ($row['100'] >= 96) { #2018
+    if ($row['100'] >= 96) { #2018, #2019
       $this->convertedScore[1] = 100;
     }elseif ($row['100'] >= 93) {
       $this->convertedScore[1] = 95;
@@ -199,16 +201,18 @@ class kku extends schoolInfo{
     }
   }
   function get_convertedEng(){
-    $minEngScore;
-    if ($this->scoreArray[6] === 'toeic'){
-      $row = get_table("kkuengconverttable", $this->scoreArray[6], $this->scoreArray[7]);
-      $this->convertedScore[2] = $row['score'];
-    }else if ($this->scoreArray[6] === 'toefl'){
-      $this->convertedScore[2] = 0;
-    }else if ($this->scoreArray[6] === 'teps'){
-      $this->convertedScore[2] = 0;
-    }
-
+    $minEngScore; #2018, 2019
+    $row = get_table("knuengconverttable", $this->scoreArray[6], $this->scoreArray[7]);
+    #if ($this->scoreArray[6] === 'toeic'){
+    //   $row = get_table("kkuengconverttable", $this->scoreArray[6], $row['toeic']);
+    //   $this->convertedScore[2] = $row['score'];
+    // }else if ($this->scoreArray[6] === 'toefl'){
+    //   $this->convertedScore[2] = 0;
+    // }else if ($this->scoreArray[6] === 'teps'){
+    //   $this->convertedScore[2] = 0;
+    // }
+    $row = get_table("kkuengconverttable", $this->scoreArray[6], $row['toeic']);
+    $this->convertedScore[2] = $row['score'];
   }
 
   function get_applecationRates(){
@@ -225,17 +229,19 @@ class knu extends schoolInfo{
   }
   function get_convertedLeet(){
     $this->convertedScore[0] = 95 + (55*($this->scoreArray[0] + $this->scoreArray[2])/($this->maxLeetA + $this->maxLeetB));
-
+    #2018, 2019
   }
 
   function get_convertedGpa(){
     $row = get_table("gpaconverttable", $this->scoreArray[4], $this->scoreArray[5]);
     $this->convertedScore[1] = 65 + $row['100']*35/100;
+    #2018, 2019
   }
   function get_convertedEng(){
     $minEngScore;
     $row = get_table("knuengconverttable", $this->scoreArray[6], $this->scoreArray[7]);
     $this->convertedScore[2] = round($row['toeic']*30/990+70,2);
+    #2018, 2019
 
   }
 
@@ -252,17 +258,20 @@ class khu extends schoolInfo{
 
   }
   function get_convertedLeet(){
-    $this->convertedScore[0] = 70 + 0.2*($this->scoreArray[0] + $this->scoreArray[2]);
+    #$this->convertedScore[0] = 70 + 0.2*($this->scoreArray[0] + $this->scoreArray[2]); //2018
+    $this->convertedScore[0] = 60 + 0.25*($this->scoreArray[0] + $this->scoreArray[2]); //2019
+
   }
 
   function get_convertedGpa(){
     $row = get_table("gpaconverttable", $this->scoreArray[4], $this->scoreArray[5]);
     $value = $row['100'];
-    if ($value >= 96){
+    if ($value >= 90){
     $this->convertedScore[1] = 100;
     }else {
-    $this->convertedScore[1] = 100 - ((96-$value) * 0.7);
+    $this->convertedScore[1] = 100 - ((90-$value) * 1);
     }
+    #2018, 2019
   }
 
   function get_convertedEng(){
@@ -280,6 +289,7 @@ class khu extends schoolInfo{
     } else {
       $this->convertedScore[2] = "fail";
     }
+    #2018, 2019
   }
 
   function get_applecationRates(){
@@ -300,7 +310,7 @@ class kru extends schoolInfo{
     $row = get_table_de("kruleetconverttable", '100', $this->scoreArray[3]);
     $leetb = $row['leetb'];
     $this->convertedScore[0] = $leeta + $leetb;
-
+    #2018, 2019
   }
 
   function get_convertedGpa(){
@@ -308,6 +318,8 @@ class kru extends schoolInfo{
     $value = floor($row['100']);
     $row = get_table("krugpaconverttable", '100', $value);
     $this->convertedScore[1] = $row['score'];
+    #2018
+    #2019 테이블 변경 / 더 세부적으로
   }
 
   function get_convertedEng(){
@@ -333,7 +345,7 @@ class kru extends schoolInfo{
       $this->convertedScore[2] = "pass";
     } else {
       $this->convertedScore[2] = "fail";
-    }  //2018
+    }  //2018, 2019
   }
 
   function get_applecationRates(){
@@ -350,18 +362,42 @@ class dau extends schoolInfo{
   }
   function get_convertedLeet(){
     //$this->convertedScore[0] = 240 + round(($this->scoreArray[0] + $this->scoreArray[2])/3,2); //2017
-    $this->convertedScore[0] = 200 + round(($this->scoreArray[0] + $this->scoreArray[2])/2,2); //2018
+    //$this->convertedScore[0] = 200 + round(($this->scoreArray[0] + $this->scoreArray[2])/2,2); //2018
+    $this->convertedScore[0] = 200 + round(($this->scoreArray[0] + $this->scoreArray[2])/2,2); //2019
   }
 
   function get_convertedGpa(){
     $row = get_table("gpaconverttable", $this->scoreArray[4], $this->scoreArray[5]);
     // $this->convertedScore[1] = 80 + $row['100']*20/100; //2017
-    $this->convertedScore[1] = 95 + $row['100']*5/100; //2018
+    //$this->convertedScore[1] = 95 + $row['100']*5/100; //2018
+    $this->convertedScore[1] = 95 + $row['100']*5/100; //2019
   }
   function get_convertedEng(){
     $minEngScore;
-    $row = get_table("dauengconverttable", $this->scoreArray[6], $this->scoreArray[7]);
-    $this->convertedScore[2] = $row['score'];
+    #$row = get_table("dauengconverttable", $this->scoreArray[6], $this->scoreArray[7]);
+    #$this->convertedScore[2] = $row['score'];
+    // 2018
+
+    $minEngScore;
+    $minEngScore2;
+    if ($this->scoreArray[6] === 'toeic'){
+      $minEngScore = 700;
+      $minEngScore2 = 600;
+    }else if ($this->scoreArray[6] === 'toefl'){
+      $minEngScore = 80;
+      $minEngScore2 = 68;
+    }else if ($this->scoreArray[6] === 'teps'){
+      $minEngScore = 549;
+      $minEngScore2 = 476;
+    }
+
+    if ($this->scoreArray[7]>=$minEngScore){
+      $this->convertedScore[2] = 200;
+    } elseif ($this->scoreArray[7] >= $minEngScore2) {
+      $this->convertedScore[2] = 190;
+    } else {
+      $this->convertedScore[2] = 0;
+    }  //2019
 
   }
 
@@ -379,13 +415,13 @@ class bsu extends schoolInfo{
   }
   function get_convertedLeet(){
     $this->convertedScore[0] = 5 + round((25*(($this->scoreArray[0]/$this->maxLeetA) +
-    ($this->scoreArray[2]/$this->maxLeetB))/2),2);
+    ($this->scoreArray[2]/$this->maxLeetB))/2),2); //2018, 2019
 
   }
 
   function get_convertedGpa(){
     $row = get_table("gpaconverttable", $this->scoreArray[4], $this->scoreArray[5]);
-    $this->convertedScore[1] = $row['100']*0.2;
+    $this->convertedScore[1] = $row['100']*0.2; //2018, 2019
   }
   function get_convertedEng(){
     $minToeic = 700;
@@ -403,6 +439,7 @@ class bsu extends schoolInfo{
     }else if ($this->scoreArray[6] === 'teps'){
       $this->convertedScore[2] = round((20*($this->scoreArray[7] - $minTeps)/($maxTeps-$minTeps)+80)*0.1,2);
     }
+    //2018, 2019
 
   }
 
@@ -420,17 +457,20 @@ class sgu extends schoolInfo{
   }
   function get_convertedLeet(){
     //$this->convertedScore[0] = 10 + (0.1*($this->scoreArray[0] + $this->scoreArray[2])); //2017
-    $this->convertedScore[0] = (0.15*($this->scoreArray[0] + $this->scoreArray[2])); //2018
+    //$this->convertedScore[0] = (0.15*($this->scoreArray[0] + $this->scoreArray[2])); //2018
+    $this->convertedScore[0] = (0.15*($this->scoreArray[0] + $this->scoreArray[2])); //2019
   }
 
   function get_convertedGpa(){
     $row = get_table("gpaconverttable", $this->scoreArray[4], $this->scoreArray[5]);
     //$this->convertedScore[1] = $row['100']*0.2 +10; //2017
-    $this->convertedScore[1] = $row['100']*0.1 +20; //2018
+    //$this->convertedScore[1] = $row['100']*0.1 +20; //2018
+    $this->convertedScore[1] = $row['100']*0.1 +20; //2019
   }
   function get_convertedEng(){
     $row = get_table_de("sguengconverttable", $this->scoreArray[6], $this->scoreArray[7]);
       $this->convertedScore[2] = $row['score'];
+      //2018, 2019
 
   }
 
@@ -448,7 +488,7 @@ class snu extends schoolInfo{
   }
   function get_convertedLeet(){
     $this->convertedScore[0] = (0.4*$this->scoreArray[1] + 0.6*$this->scoreArray[3]);
-
+    // 2018, 2019
   }
 
   function get_convertedGpa(){
@@ -458,11 +498,11 @@ class snu extends schoolInfo{
   function get_convertedEng(){
     $minEngScore;
     if ($this->scoreArray[6] === 'toeic'){
-      $minEngScore = 999;
+      $minEngScore = 1000;
     }else if ($this->scoreArray[6] === 'toefl'){
-      $minEngScore = 99;
+      $minEngScore = 0;
     }else if ($this->scoreArray[6] === 'teps'){
-      $minEngScore = 701;
+      $minEngScore = 0;
     }
 
     if ($this->scoreArray[7]>=$minEngScore){
@@ -470,6 +510,8 @@ class snu extends schoolInfo{
     } else {
       $this->convertedScore[2] = "fail";
     }
+    //2018
+    //2019 성적 제한 없어짐. 가지고만 있으면 지원가능
   }
 
   function get_applecationRates(){
@@ -488,12 +530,14 @@ class uos extends schoolInfo{
     if($this->convertedScore[0] > 15){
       $this->convertedScore[0] = 15;
     }
+    // 2018, 2019
   }
 
   function get_convertedGpa(){
     $row = get_table("gpaconverttable", $this->scoreArray[4], $this->scoreArray[5]);
     //$this->convertedScore[1] = $row['100']*0.15; //2017
-    $this->convertedScore[1] = $row['100']*0.20; //2018
+    //$this->convertedScore[1] = $row['100']*0.20; //2018
+    $this->convertedScore[1] = $row['100']*0.20; //2019
   }
   function get_convertedEng(){
     $row = get_table("knuengconverttable", $this->scoreArray[6], $this->scoreArray[7]);
@@ -506,6 +550,8 @@ class uos extends schoolInfo{
         //$this->convertedScore[2] = $this->scoreArray[7]*0.015+1; //2017
         $this->convertedScore[2] = $row['toeic']*0.015+6; //2018
       }
+
+      //2018,2019
 
 
   }
@@ -524,12 +570,13 @@ class skku extends schoolInfo{
   }
   function get_convertedLeet(){
     //$this->convertedScore[0] = ($this->scoreArray[0] + $this->scoreArray[2])*0.5*0.25; //2017
-    $this->convertedScore[0] = ($this->scoreArray[0] + $this->scoreArray[2])*0.5*0.3; //2018
+    //$this->convertedScore[0] = ($this->scoreArray[0] + $this->scoreArray[2])*0.5*0.3; //2018
+    $this->convertedScore[0] = ($this->scoreArray[0] + $this->scoreArray[2])*0.15; //2019
   }
 
   function get_convertedGpa(){
     $row = get_table("gpaconverttable", $this->scoreArray[4], $this->scoreArray[5]);
-    $this->convertedScore[1] = $row['100']*0.13+12;
+    $this->convertedScore[1] = $row['100']*0.15+15; //2019
   }
   function get_convertedEng(){
     $row = get_table("knuengconverttable", $this->scoreArray[6], $this->scoreArray[7]);
@@ -537,7 +584,7 @@ class skku extends schoolInfo{
     $row = get_table_de("skkuengconverttable", $this->scoreArray[6], $cvt_eng);
 
       $this->convertedScore[2] = $row['score'];
-
+      //2019 테이블 변경
   }
 
   function get_applecationRates(){
@@ -553,19 +600,21 @@ class aju extends schoolInfo{
 
   }
   function get_convertedLeet(){
-    $this->convertedScore[0] = (($this->scoreArray[0] + $this->scoreArray[2])*0.4 +
-    ($this->scoreArray[1]+$this->scoreArray[3])*0.1)*0.25+5;
+    //$this->convertedScore[0] = (($this->scoreArray[0] + $this->scoreArray[2])*0.4 +
+    //($this->scoreArray[1]+$this->scoreArray[3])*0.1)*0.25+5; //2018
+    $this->convertedScore[0] = (($this->scoreArray[0]*0.4 + $this->scoreArray[2]*0.6)*0.8 + ($this->scoreArray[1]*0.4 + $this->scoreArray[3]*0.6)*0.2)*0.25+5
+    //2019
 
   }
 
   function get_convertedGpa(){
     $row = get_table("gpaconverttable", $this->scoreArray[4], $this->scoreArray[5]);
     //$this->convertedScore[1] = $row['100']*0.2*0.5+10; //2017
-    $this->convertedScore[1] = $row['100']*0.2*0.75+5; //2018
+    $this->convertedScore[1] = $row['100']*0.2*0.75+5; //2018, 2019
   }
   function get_convertedEng(){
     $row = get_table_de("ajuengconverttable", $this->scoreArray[6], $this->scoreArray[7]);
-    $this->convertedScore[2] = $row['score']*0.12+8;
+    $this->convertedScore[2] = $row['score']*0.12+8; //2019
   }
 
   function get_applecationRates(){
@@ -581,9 +630,13 @@ class ysu extends schoolInfo{
 
   }
   function get_convertedLeet(){
-    $row = get_table_de("ysuleetconverttable", 'leet', $this->scoreArray[0]+$this->scoreArray[2]);
-
-    $this->convertedScore[0] = $row['score'];
+    //$row = get_table_de("ysuleetconverttable", 'leet', $this->scoreArray[0]+$this->scoreArray[2]); //2018
+    $row = get_table_de("ysuleetconverttable", '100', $this->scoreArray[1]);
+    $leeta = $row['leeta'];
+    $row = get_table_de("ysuleetconverttable", '100', $this->scoreArray[3]);
+    $leetb = $row['leetb'];
+    $this->convertedScore[0] = $leeta + $leetb;
+    //2019
 
   }
 
@@ -594,9 +647,23 @@ class ysu extends schoolInfo{
   }
 
   function get_convertedEng(){
-    $row = get_table_de("ysuengconverttable", $this->scoreArray[6], $this->scoreArray[7]);
+    //$row = get_table_de("ysuengconverttable", $this->scoreArray[6], $this->scoreArray[7]); //2018
+    //$this->convertedScore[2] = $row['score']; //2018
 
-      $this->convertedScore[2] = $row['score'];
+    $minEngScore;
+    if ($this->scoreArray[6] === 'toeic'){
+      $minEngScore = 850;
+    }else if ($this->scoreArray[6] === 'toefl'){
+      $minEngScore = 99;
+    }else if ($this->scoreArray[6] === 'teps'){
+      $minEngScore = 700;
+    }
+
+    if ($this->scoreArray[7]>=$minEngScore){
+      $this->convertedScore[2] = "pass";
+    } else {
+      $this->convertedScore[2] = "fail";
+    }  // 2019
 
   }
 
@@ -605,7 +672,7 @@ class ysu extends schoolInfo{
   }
 }
 // 영남대 변경 없음 수정 완료
-class ynu extends schoolInfo{
+class ynu extends schoolInfo{//2018, 2019
   function __construct($scoreArray){
     $this->schoolName = '영남대';
     $this->schoolId = 14;
@@ -613,7 +680,7 @@ class ynu extends schoolInfo{
 
   }
   function get_convertedLeet(){
-    $this->convertedScore[0] = round(($this->scoreArray[0]+$this->scoreArray[2])*1.5,2);
+    $this->convertedScore[0] = round(($this->scoreArray[0]+$this->scoreArray[2])*1.5,2); //2018,2019
   }
 
   function get_convertedGpa(){
@@ -667,7 +734,8 @@ class wgu extends schoolInfo{
   }
 
   function get_convertedGpa(){
-    $this->convertedScore[1] =$this->scoreArray[5]*4.5/$this->scoreArray[4]*3/4.5+17;
+    //$this->convertedScore[1] =$this->scoreArray[5]*4.5/$this->scoreArray[4]*3/4.5+17;//2018
+    $this->convertedScore[1] =$this->scoreArray[5]*4.5/$this->scoreArray[4]*2/4.5+18;//2019
   }
   function get_convertedEng(){
     $minvalue1;
@@ -691,9 +759,10 @@ class wgu extends schoolInfo{
     if ($this->scoreArray[7] >= $minvalue1){
       $this->convertedScore[2] = 20;
     }elseif ($this->scoreArray[7] <=$minvalue2){
-      $this->convertedScore[2] = 16;
+      //$this->convertedScore[2] = 16; //2018
+      $this->convertedScore[2] = 18; //2019
     }else{
-      $this->convertedScore[2] = (($this->scoreArray[7]-$minvalue2)/($minvalue1-$minvalue2)*4)+16;
+      $this->convertedScore[2] = (($this->scoreArray[7]-$minvalue2)/($minvalue1-$minvalue2)*2)+18;
     }
   }
   function get_applecationRates(){
@@ -708,13 +777,14 @@ class ehu extends schoolInfo{
     $this->scoreArray = $scoreArray;
   }
   function get_convertedLeet(){
-    $row = get_table_de("ehuleetconverttable", 'leet', $this->scoreArray[0]+$this->scoreArray[2]);
+    //$row = get_table_de("ehuleetconverttable", 'leet', $this->scoreArray[0]+$this->scoreArray[2]);
 
-    $this->convertedScore[0] = $row['score'];
+    //$this->convertedScore[0] = $row['score']; //2018
+    $this->convertedScore[0] = ($this->scoreArray[0]+$this->scoreArray[2]-40)/2 //2019
   }
 
   function get_convertedGpa(){
-    $this->convertedScore[1] =$this->scoreArray[5]/$this->scoreArray[4]*40;
+    $this->convertedScore[1] =$this->scoreArray[5]/$this->scoreArray[4]*40; //2018, 2019
   }
   function get_convertedEng(){
     $row = get_table_de("ehuengconverttable", $this->scoreArray[6], $this->scoreArray[7]);
@@ -735,7 +805,8 @@ class ihu extends schoolInfo{
   }
   function get_convertedLeet(){
     //$this->convertedScore[0] = ($this->scoreArray[0]+$this->scoreArray[2])*250/160; //2017
-    $this->convertedScore[0] = ($this->scoreArray[0]+$this->scoreArray[2])*200/160 +50;
+    //$this->convertedScore[0] = ($this->scoreArray[0]+$this->scoreArray[2])*200/160 +50; //2018
+    $this->convertedScore[0] = ($this->scoreArray[0]+$this->scoreArray[2])*210/160 +40; //2019
   }
 
   function get_convertedGpa(){
@@ -752,7 +823,7 @@ class ihu extends schoolInfo{
     //데이터 베이스에서 가져오기
   }
 }
-// 학점 비중 높아짐 수정 완료
+// 학점 비중 높아짐 수정 완료 , 20119
 class jnu extends schoolInfo{
   function __construct($scoreArray){
     $this->schoolName = '전남대';
@@ -772,7 +843,7 @@ class jnu extends schoolInfo{
   function get_convertedGpa(){
     $row = get_table("gpaconverttable", $this->scoreArray[4], $this->scoreArray[5]);
     //$this->convertedScore[1] = $row['100']*60/100+40; //2017
-    $this->convertedScore[1] = $row['100']*70/100+30;
+    $this->convertedScore[1] = $row['100']*70/100+30; // 2018, 2019
   }
   function get_convertedEng(){
     $minEngScore;
@@ -807,7 +878,7 @@ class jbu extends schoolInfo{
     }else{
       $addValue = 0;
     }
-    $this->convertedScore[0] = round($sumValue *30/200 + $addValue,2);
+    $this->convertedScore[0] = round($sumValue *30/200 + $addValue,2); //2018, 2019
   }
 
   function get_convertedGpa(){
@@ -835,16 +906,17 @@ class jju extends schoolInfo{
   }
   function get_convertedLeet(){
     //$this->convertedScore[0] = ($this->scoreArray[0]*0.4 + $this->scoreArray[2]*0.6)*0.25; //2017
-    $this->convertedScore[0] = ($this->scoreArray[0]*0.4 + $this->scoreArray[2]*0.6)*0.3; //2018
+    //$this->convertedScore[0] = ($this->scoreArray[0]*0.4 + $this->scoreArray[2]*0.6)*0.3; //2018
+    $this->convertedScore[0] = ($this->scoreArray[0]*0.4 + $this->scoreArray[2]*0.6)*0.3; //2019
   }
   function get_convertedGpa(){
     $row = get_table("jjugpaconverttable", $this->scoreArray[4], $this->scoreArray[5]);
-    $this->convertedScore[1] = $row['score']*20/100;
+    $this->convertedScore[1] = $row['score']*20/100; //2018, 2019
   }
   function get_convertedEng(){
     $row = get_table_de("jjuengconverttable", $this->scoreArray[6], $this->scoreArray[7]);
     //$this->convertedScore[2] = $row['score']/100*15; //2017
-    $this->convertedScore[2] = $row['score']/100*10; //2018
+    $this->convertedScore[2] = $row['score']/100*10; //2018, 2019
   }
   function get_applecationRates(){
     //데이터 베이스에서 가져오기
@@ -866,7 +938,7 @@ class jau extends schoolInfo{
       $this->convertedScore[0] = 100;
     }else{
       $this->convertedScore[0] = round(($sumValue-84)*20/51,2)+80;
-    }
+    } // 2018, 2019
   }
 
   function get_convertedGpa(){
@@ -877,7 +949,9 @@ class jau extends schoolInfo{
       $this->convertedScore[1] = 100;
     }else{
       $this->convertedScore[1] = round(($row['4.5']-2.4)*20/2,2)+80;
-    }  }
+    } // 2018, 2019
+  }
+
   function get_convertedEng(){
     $maxValue;
     if($this->scoreArray[6] === 'toefl'){
@@ -912,7 +986,7 @@ class cnu extends schoolInfo{
   }
   function get_applecationRates(){
     //데이터 베이스에서 가져오기
-  }
+  } // 2018, 2019
 }
 // 최고점 수정 시 변경 가능, 논술 많이봄, 수정 완료
 class cbu extends schoolInfo{
@@ -923,7 +997,8 @@ class cbu extends schoolInfo{
   }
   function get_convertedLeet(){
     $sumValue = $this->scoreArray[0]/$this->maxLeetA + $this->scoreArray[2]/$this->maxLeetB;
-      $this->convertedScore[0] = round($sumValue*50,2);
+      //$this->convertedScore[0] = round($sumValue*50,2);//2018
+      $this->convertedScore[0] = round($sumValue*75,2);//2019
   }
   function get_convertedGpa(){
     $row = get_table("gpaconverttable", $this->scoreArray[4], $this->scoreArray[5]);
@@ -948,11 +1023,13 @@ class hufs extends schoolInfo{
   function get_convertedLeet(){
     $sumValue = $this->scoreArray[0] + $this->scoreArray[2];
       //$this->convertedScore[0] = $sumValue+50; //2017
-      $this->convertedScore[0] = $sumValue/2+25;
+      //$this->convertedScore[0] = $sumValue/2+25; //2018
+      $this->convertedScore[0] = $sumValue/2+25; //2019
   }
   function get_convertedGpa(){
       //$this->convertedScore[1] = ($this->scoreArray[5] / $this->scoreArray[4])*50+50; //2017
-      $this->convertedScore[1] = ($this->scoreArray[5] / $this->scoreArray[4])*35+65;
+      //$this->convertedScore[1] = ($this->scoreArray[5] / $this->scoreArray[4])*35+65; //2018
+      $this->convertedScore[1] = ($this->scoreArray[5] / $this->scoreArray[4])*35+65; //2019
     }
   function get_convertedEng(){
     $maxValue;
@@ -962,13 +1039,14 @@ class hufs extends schoolInfo{
       $maxValue = 990;
     }
     //$this->convertedScore[2] = round($this->scoreArray[7]/$maxValue*50,2)+50; //2017
-    $this->convertedScore[2] = round($this->scoreArray[7]/$maxValue*30,2)+70; //2018
+    //$this->convertedScore[2] = round($this->scoreArray[7]/$maxValue*30,2)+70; //2018
+    $this->convertedScore[2] = round($this->scoreArray[7]/$maxValue*30,2)+70; //2019
   }
   function get_applecationRates(){
     //데이터 베이스에서 가져오기
   }
 }
-// 변경 없음 수정 완료
+// 변경 없음 수정 완료 2018, 2019
 class hyu extends schoolInfo{
   function __construct($scoreArray){
     $this->schoolName = '한양대';
