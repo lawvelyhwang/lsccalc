@@ -200,10 +200,10 @@
     <div class="jumbotron" style="background : white;">
       <div tyle="text-align: center;" style="font-weight: bold;" >
 
-         * 아래의 계산된 환산점수는 2018학년도 합격자와의 비교를 위해 2018학년도 입시요강을 사용하고 있습니다. <br>
+         <!--* 아래의 계산된 환산점수는 2018학년도 합격자와의 비교를 위해 2018학년도 입시요강을 사용하고 있습니다. <br>-->
          * 정성요소와 함께 합격자가 선정되기에 이 통계자료가 합격의 절대적인 기준이 될 수 없음을 알려드립니다. <br>
-         * 평균변환점수는 각 학교에서 발표한 2018학년 신입생 선발결과 자료 중 평균값을 기준으로 계산한 값입니다.<br><br>
-         * 단계별 학교선택 가이드 1단계 자료와 2019학년도 입시요강 및 정성요소를 고려하시어 최적의 학교를 찾아내시기 바랍니다.<br><br>
+         <!--* 평균변환점수는 각 학교에서 발표한 2018학년 신입생 선발결과 자료 중 평균값을 기준으로 계산한 값입니다.<br><br>-->
+         <!--* 단계별 학교선택 가이드 1단계 자료와 2019학년도 입시요강 및 정성요소를 고려하시어 최적의 학교를 찾아내시기 바랍니다.<br><br>-->
 
       </div>
       <div class="panel panel-default">
@@ -260,71 +260,71 @@
                 }else{
                   echo $rowRate['eng'];
                 }
-                echo "</td>
-                <td width=\"16%\">{$sumValueRate}</td>
-              </tr>
-              <tr>
-                <td width=\"18%\">평균변환점수</td>
-                <td width=\"16%\">{$rowAvg['leet']}</td>
-                <td width=\"16%\">{$rowAvg['gpa']}</td>
-                <td width=\"16%\">";
-                  if($i == 5){
-                    echo 99.7;
-                  }elseif($rowAvg['eng']== 0){
-                    echo "pass";
-                  }else{
-                    echo $rowAvg['eng'];
-                  }
-                  echo "</td>
-                  <td width=\"16%\">{$sumAvg}</td>
-                </tr>
-
-                <tr>";
-                  $percentleet = round($convertedLeet/$rowAvg['leet'],4)*100;
-                  $percentgpa = round($convertedGpa/$rowAvg['gpa'],4)*100;
-                  $percenteng = round($convertedEng/$rowAvg['eng'],4)*100;
-                  $percentsum = round($sumValue/$sumAvg,4)*100;
-
-                  echo "<td width=\"18%\">본인 / 평균</td> <td width=\"16%\"";
-                  if($percentleet <= 95){
-                    echo " style= \"color:#ff0000; font-weight:bold;\"";
-                  }elseif($percentleet >= 105){
-
-                    echo " style= \"color:#0000ff;\"";
-                  }
-                  echo  ">{$percentleet}%</td>
-                  <td width=\"16%\"";
-
-                  if($percentgpa <= 95){
-                    echo " style= \"color:#ff0000; font-weight:bold;\"";
-                  }elseif($percentgpa >= 105){
-                    echo " style= \"color:#0000ff;\"";
-                  }
-                  echo ">{$percentgpa}%</td>
-                  <td width=\"16%\"";
-
-                  if($percenteng <= 95){
-                    if($percenteng != 0){
-                      echo " style= \"color:#ff0000; font-weight:bold;\"";
-                      echo ">{$percenteng}%";}else{
-                        echo ">-";
-                      }
-
-                    }elseif($percenteng >= 105){
-                      echo " style= \"color:#0000ff;\"";
-                      echo ">{$percenteng}%";
-                    }else{
-                      echo ">{$percenteng}%";
-                    }
-                    echo "</td><td width=\"16%\"";
-
-                    if($percentsum <= 95){
-                      echo " style= \"color:#ff0000; font-weight:bold;\"";
-                    }elseif($percentsum >= 105){
-                      echo " style= \"color:#0000ff;\"";
-                    }
-                    echo ">{$percentsum}%</td>
-                  </tr>
+                echo "</td>";
+              //   echo "<td width=\"16%\">{$sumValueRate}</td>
+              // </tr>
+              // <tr>
+              //   <td width=\"18%\">평균변환점수</td>
+              //   <td width=\"16%\">{$rowAvg['leet']}</td>
+              //   <td width=\"16%\">{$rowAvg['gpa']}</td>
+              //   <td width=\"16%\">";
+              //     if($i == 5){
+              //       echo 99.7;
+              //     }elseif($rowAvg['eng']== 0){
+              //       echo "pass";
+              //     }else{
+              //       echo $rowAvg['eng'];
+              //     }
+              //     echo "</td>
+              //     <td width=\"16%\">{$sumAvg}</td>
+              //   </tr>
+              //
+              //   <tr>";
+              //     $percentleet = round($convertedLeet/$rowAvg['leet'],4)*100;
+              //     $percentgpa = round($convertedGpa/$rowAvg['gpa'],4)*100;
+              //     $percenteng = round($convertedEng/$rowAvg['eng'],4)*100;
+              //     $percentsum = round($sumValue/$sumAvg,4)*100;
+              //
+              //     echo "<td width=\"18%\">본인 / 평균</td> <td width=\"16%\"";
+              //     if($percentleet <= 95){
+              //       echo " style= \"color:#ff0000; font-weight:bold;\"";
+              //     }elseif($percentleet >= 105){
+              //
+              //       echo " style= \"color:#0000ff;\"";
+              //     }
+              //     echo  ">{$percentleet}%</td>
+              //     <td width=\"16%\"";
+              //
+              //     if($percentgpa <= 95){
+              //       echo " style= \"color:#ff0000; font-weight:bold;\"";
+              //     }elseif($percentgpa >= 105){
+              //       echo " style= \"color:#0000ff;\"";
+              //     }
+              //     echo ">{$percentgpa}%</td>
+              //     <td width=\"16%\"";
+              //
+              //     if($percenteng <= 95){
+              //       if($percenteng != 0){
+              //         echo " style= \"color:#ff0000; font-weight:bold;\"";
+              //         echo ">{$percenteng}%";}else{
+              //           echo ">-";
+              //         }
+              //
+              //       }elseif($percenteng >= 105){
+              //         echo " style= \"color:#0000ff;\"";
+              //         echo ">{$percenteng}%";
+              //       }else{
+              //         echo ">{$percenteng}%";
+              //       }
+              //       echo "</td><td width=\"16%\"";
+              //
+              //       if($percentsum <= 95){
+              //         echo " style= \"color:#ff0000; font-weight:bold;\"";
+              //       }elseif($percentsum >= 105){
+              //         echo " style= \"color:#0000ff;\"";
+              //       }
+              //       echo ">{$percentsum}%</td>
+              //     </tr>
 
                 </tbody>
               </table>";
