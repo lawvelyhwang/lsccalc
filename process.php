@@ -241,7 +241,7 @@
                 <th width=\"16%\">합계</th>
               </tr>
 
-            </thead><tbody><tr >
+            </thead><tbody><tr>
             <td rowspan=\"4\"  width=\"18%\"><br>{$school[$i-1]->schoolName} </td>
 
               <td width=\"18%\">변환점수</td>
@@ -261,9 +261,8 @@
                   echo $rowRate['eng'];
                 }
                 echo "</td>";
-              //   echo "<td width=\"16%\">{$sumValueRate}</td>
-              // </tr>
-              // <tr>
+                 echo "<td width=\"16%\">{$sumValueRate}</td></tr>";
+              // echo "<tr>
               //   <td width=\"18%\">평균변환점수</td>
               //   <td width=\"16%\">{$rowAvg['leet']}</td>
               //   <td width=\"16%\">{$rowAvg['gpa']}</td>
@@ -325,7 +324,7 @@
               //       }
               //       echo ">{$percentsum}%</td>
               //     </tr>
-
+              echo "
                 </tbody>
               </table>";
             }
